@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cy_Borg Cyberware Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #282c34;
+        color: #61dafb;
+        text-align: center;
+        margin: 20px;
+      }
+
+      button {
+        background-color: #61dafb;
+        color: #282c34;
+        font-size: 16px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+
+      #downloadLink {
+        display: none;
+        color: #61dafb;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cy_Borg Cyberware Generator</h1>
+    <p id="cyberwareResult">Click the button to generate a random cyberware.</p>
+    <button onclick="generateCyberware()">Generate Cyberware</button>
+    <a id="downloadLink" download="generated_cyberware.txt"
+      >Download Cyberware</a
+    >
+
+    <script>
+      class Cyberware {
+        constructor(brand, condition, type, codename, price, rarity) {
+          this.brand = brand;
+          this.condition = condition;
+          this.type = type;
+          this.codename = codename;
+          this.price = price;
+          this.rarity = rarity;
+        }
+
+        toString() {
+          return `Brand: ${this.brand} \nRarity:${this.rarity} \nCondition:${this.condition} \nPrice:${this.price} \nType:${this.type} \nCodename:${this.codename} \nPrice:${this.price}`;
+        }
+      }
+
+      const cyberwareOptions = {
+        conditions: [
+          "Broken",
+          "Scarred (Breaks on 1)",
+          "Stained (-1 Style)",
+          "Chipped (-1 when using)",
+          "Decent",
+          "Mint (+1 when using)",
+          "Antique (+1 Style)",
+          "Etched (+1 Style)",
+          "Prototype (2x effects, breaks on Crit/Fumble)",
+          "Masterwork (2x effects)",
+        ],
+        brands: [
+          "BLACKHAMMER",
+          "MILITECHKA",
+          "GRIMM",
+          "LOCKHEED",
+          "U.S.ARMS",
+          "MANN",
+          "REBRIDGE",
+          "KARPATIKA",
+          "BYZANTIUM",
+          "WULFHUND",
+          "MEGA",
+          "BUDGETARMS",
+          "VICEROY",
+          "SHIZUKU",
+          "KOWLUNG",
+          "ZENTAI",
+          "DOSTOEV",
+          "CHASSEUR",
+          "DECHEVEAU",
+          "ZIDOVKA",
+          "STREET",
+          "ARMY",
+          "POLICE",
+          "BLACK OPS",
+          "SCAV",
+        ],
+        types: [
+          "Skillchip",
+          "Leg",
+          "Arm",
+          "Eyes",
+          "Neuralink",
+          "Hand",
+          "Foot",
+          "Internal",
+          "Audio",
+          "Skin",
+          "Skeleton",
+          "Exotic",
+        ],
+        codenames: [
+          "LX",
+          "KLF",
+          "ARB",
+          "IRN",
+          "IRQ",
+          "ROM",
+          "LUX",
+          "SXY",
+          "SXS",
+          "SOR",
+          "PRS",
+          "GRM",
+          "PRM",
+          "MDV",
+          "RSS",
+          "USA",
+          "SUA",
+          "RSA",
+          "XLR",
+          "XQP",
+          "MSA",
+          "KKW",
+          "PPQ",
+          "PPR",
+          "PPW",
+          "MAJ",
+          "KNG",
+          "QNN",
+          "JKR",
+          "JFK",
+          "FDR",
+          "DEJ",
+          "GDJ",
+          "NCL",
+          "BUC",
+          "IAS",
+          "CLJ",
+          "SCV",
+          "VSL",
+          "CRB",
+          "CVA",
+        ],
+        prices: [
+          "15",
+          "30",
+          "45",
+          "60",
+          "70",
+          "75",
+          "80",
+          "85",
+          "90",
+          "95",
+          "98",
+          "100",
+          "100",
+        ],
+        rarities: [
+          "legendary",
+          "epic",
+          "rare",
+          "common",
+          "common",
+          "common",
+          "common",
+          "common",
+          "rare",
+          "rare",
+          "epic",
+          "legendary",
+          "common",
+          "rare",
+          "epic",
+          "rare",
+          "epic",
+          "legendary",
+          "common",
+          "epic",
+          "rare",
+          "common",
+          "common",
+          "common",
+          "common",
+        ],
+      };
+
+      function generateCyberware() {
+        const randomConditionIndex = getRandomIndex(
+          cyberwareOptions.conditions
+        );
+        const randomBrandIndex = getRandomIndex(cyberwareOptions.brands);
+        const randomTypeIndex = getRandomIndex(cyberwareOptions.types);
+        const randomCodenameIndex = getRandomIndex(cyberwareOptions.codenames);
+        const randomPriceIndex = getRandomIndex(cyberwareOptions.prices);
+
+        const condition = cyberwareOptions.conditions[randomConditionIndex];
+        const brand = cyberwareOptions.brands[randomBrandIndex];
+        const type = cyberwareOptions.types[randomTypeIndex];
+        const codename = cyberwareOptions.codenames[randomCodenameIndex];
+        const price = cyberwareOptions.prices[randomPriceIndex];
+
+        const rarityIndex = getRandomIndex(cyberwareOptions.rarities);
+        const rarity = cyberwareOptions.rarities[rarityIndex];
+
+        const generatedCyberware = new Cyberware(
+          brand,
+          condition,
+          type,
+          codename,
+          price,
+          rarity
+        );
+        document.getElementById("cyberwareResult").textContent =
+          "Generated Cyberware: " + generatedCyberware.toString();
+
+        // Enable the download link
+        document.getElementById("downloadLink").style.display = "block";
+        // Set the download link href to a data URI containing the generated content
+        document.getElementById("downloadLink").href =
+          "data:text/plain;charset=utf-8," +
+          encodeURIComponent(generatedCyberware.toString());
+      }
+
+      function getRandomIndex(array) {
+        return Math.floor(Math.random() * array.length);
+      }
+    </script>
+  </body>
+</html>
