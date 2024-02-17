@@ -44,6 +44,79 @@ let brands = {
   "LUXURY ZIDOVKA": 0.02,
 };
 
+// step 3
+
+let budgetConditions = {
+  Broken: 0.1,
+  "Scarred (Breaks on 1)": 0.2,
+  "Stained (-1 Style)": 0.2,
+  "Chipped (-1 when using)": 0.15,
+  Decent: 0.1,
+  "Mint (+1 when using)": 0.07,
+  "Antique (+1 Style)": 0.03,
+  "Etched (+1 Style)": 0.03,
+  "Chromed (+1 Style)": 0.03,
+  Realskinn: 0.05,
+  "Prototype (2x effects, breaks on Crit/Fumble)": 0.03,
+  "Masterwork (2x effects)": 0.01,
+};
+let industrialConditions = {
+  Broken: 0.05,
+  "Scarred (Breaks on 1)": 0.05,
+  "Stained (-1 Style)": 0.25,
+  "Chipped (-1 when using)": 0.2,
+  Decent: 0.3,
+  "Mint (+1 when using)": 0.05,
+  "Antique (+1 Style)": 0.01,
+  "Etched (+1 Style)": 0.01,
+  "Chromed (+1 Style)": 0.01,
+  Realskinn: 0.01,
+  "Prototype (2x effects, breaks on Crit/Fumble)": 0.05,
+  "Masterwork (2x effects)": 0.01,
+};
+let militaryConditions = {
+  Broken: 0.01,
+  "Scarred (Breaks on 1)": 0.01,
+  "Stained (-1 Style)": 0.15,
+  "Chipped (-1 when using)": 0.2,
+  Decent: 0.2,
+  "Mint (+1 when using)": 0.15,
+  "Antique (+1 Style)": 0.02,
+  "Etched (+1 Style)": 0.06,
+  "Chromed (+1 Style)": 0.05,
+  Realskinn: 0.02,
+  "Prototype (2x effects, breaks on Crit/Fumble)": 0.1,
+  "Masterwork (2x effects)": 0.03,
+};
+let luxuryConditions = {
+  Broken: 0.05,
+  "Scarred (Breaks on 1)": 0.03,
+  "Stained (-1 Style)": 0.02,
+  "Chipped (-1 when using)": 0.05,
+  Decent: 0.15,
+  "Mint (+1 when using)": 0.1,
+  "Antique (+1 Style)": 0.15,
+  "Etched (+1 Style)": 0.1,
+  "Chromed (+1 Style)": 0.1,
+  Realskinn: 0.1,
+  "Prototype (2x effects, breaks on Crit/Fumble)": 0.05,
+  "Masterwork (2x effects)": 0.1,
+};
+let specialConditions = {
+  Broken: 0.1,
+  "Scarred (Breaks on 1)": 0.05,
+  "Stained (-1 Style)": 0.02,
+  "Chipped (-1 when using)": 0.1,
+  Decent: 0.1,
+  "Mint (+1 when using)": 0.05,
+  "Antique (+1 Style)": 0.02,
+  "Etched (+1 Style)": 0.02,
+  "Chromed (+1 Style)": 0.05,
+  Realskinn: 0.04,
+  "Prototype (2x effects, breaks on Crit/Fumble)": 0.35,
+  "Masterwork (2x effects)": 0.1,
+};
+
 function generateCyberware() {
   document.getElementById("cyberwareResult").innerHTML =
     "Generated Cyberware: <ul> ";
@@ -51,22 +124,80 @@ function generateCyberware() {
   let begin = "<li>";
 
   let cybernetic = getRandomItemFrom(cybernetics);
+
+  let price = 0;
+  if (cybernetic == "Skillchip") price = 20;
+  if (cybernetic == "Leg") price = 100;
+  if (cybernetic == "Arm") price = 100;
+  if (cybernetic == "Eyes") price = 150;
+  if (cybernetic == "Neuralink") price = 200;
+  if (cybernetic == "Hand") price = 70;
+  if (cybernetic == "Foot") price = 50;
+  if (cybernetic == "Internal") price = 200;
+  if (cybernetic == "Skin") price = 50;
+  if (cybernetic == "Skeleton") price = 300;
+  if (cybernetic == "Exotic") price = 400;
+
   // step 2
   let brand = getRandomItemFrom(brands);
   let brandColour = "";
-  if (brand.startsWith("MILITARY")) brandColour = "green";
-  if (brand.startsWith("BUDGET")) brandColour = "beige";
-  if (brand.startsWith("SPECIAL")) brandColour = "darkgray";
-  if (brand.startsWith("INDUSTRIAL")) brandColour = "orange";
-  if (brand.startsWith("LUXURY")) brandColour = "purple";
+  let condition = "";
+
+  if (brand.startsWith("MILITARY")) {
+    brandColour = "green";
+    price = price * 3;
+    condition = getRandomItemFrom(militaryConditions);
+  }
+  if (brand.startsWith("BUDGET")) {
+    brandColour = "beige";
+    price = price * 1;
+    condition = getRandomItemFrom(budgetConditions);
+  }
+  if (brand.startsWith("SPECIAL")) {
+    brandColour = "darkgray";
+    price = price * 10;
+    condition = getRandomItemFrom(specialConditions);
+  }
+  if (brand.startsWith("INDUSTRIAL")) {
+    brandColour = "orange";
+    price = price * 2;
+    condition = getRandomItemFrom(industrialConditions);
+  }
+  if (brand.startsWith("LUXURY")) {
+    brandColour = "purple";
+    price = price * 5;
+    condition = getRandomItemFrom(luxuryConditions);
+  }
+
+  // step 4
+
+  if (condition == "Broken") price = price * 0.5;
+  if (condition == "Scarred (Breaks on 1)") price = price * 0.75;
+  if (condition == "Stained (-1 Style)") price = price * 0.75;
+  if (condition == "Chipped (-1 when using)") price = price * 0.9;
+  if (condition == "Decent") price = price * 1;
+  if (condition == "Mint (+1 when using)") price = price * 1.1;
+  if (condition == "Antique (+1 Style)") price = price * 1.5;
+  if (condition == "Etched (+1 Style)") price = price * 1.5;
+  if (condition == "Chromed (+1 Style)") price = price * 2;
+  if (condition == "Realskinn") price = price * 2;
+  if (condition == "Prototype (2x effects, breaks on Crit/Fumble)")
+    price = price * 3;
+  if (condition == "Masterwork (2x effects)") price = price * 5;
+
+  price = price.toFixed(2);
 
   cyberwareResult = begin.concat(
     "Cybernetic: ",
     cybernetic,
     '</li><li style="color:',
     brandColour,
-    '">',
+    '"> Brand: ',
     brand,
+    "</li><li> Condition: ",
+    condition,
+    '</li><li style="color:gold"> Price: ',
+    price,
     "</li></ul>"
   );
 
