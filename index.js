@@ -1,305 +1,100 @@
-// price multiplier for each condition + brand ( rarity )
+// step 1
+let cybernetics = {
+  Skillchip: 0.15,
+  Leg: 0.15,
+  Arm: 0.15,
+  Eyes: 0.15,
+  Neuralink: 0.1,
+  Hand: 0.05,
+  Foot: 0.05,
+  Internal: 0.05,
+  Audio: 0.05,
+  Skin: 0.05,
+  Skeleton: 0.03,
+  Exotic: 0.02,
+};
 
-/* how would you add randomness, I have a list of all the conditions. 
-    how do you take that option and add weight to it
+// step 2
 
-*/
-
-const cyberwareOptions = {
-  conditions: [
-    {
-      name: "Broken",
-      priceModifier: 0.5,
-    },
-    {
-      name: "Scarred (Breaks on 1)",
-      priceModifier: 0.75,
-    },
-    {
-      name: "Stained (-1 Style)",
-      priceModifier: 0.75,
-    },
-    {
-      name: "Chipped (-1 when using)",
-      priceModifier: 0.9,
-    },
-    {
-      name: "Decent",
-      priceModifier: 1,
-    },
-    {
-      name: "Mint (+1 when using)",
-      priceModifier: 1.1,
-    },
-    {
-      name: "Antique (+1 Style)",
-      priceModifier: 1.5,
-    },
-    {
-      name: "Etched (+1 Style)",
-      priceModifier: 1.5,
-    },
-    {
-      name: "Chromed (+1 Style)",
-      priceModifier: 2,
-    },
-    {
-      name: "Realskinn ",
-      priceModifier: 2,
-    },
-    {
-      name: "Prototype (2x effects, breaks on Crit/Fumble)",
-      priceModifier: 3,
-    },
-    {
-      name: "Masterwork (2x effects)",
-      priceModifier: 5,
-    },
-  ],
-  brands: [
-    // this is a very stupid way of doing rarities in lists
-    // rarity 4
-    "BLACKHAMMER",
-    "BLACKHAMMER",
-    "BLACKHAMMER",
-    "BLACKHAMMER",
-    // rarity 4
-    "MILITECHKA",
-    "MILITECHKA",
-    "MILITECHKA",
-    "MILITECHKA",
-    // rarity 4
-    "GRIMM",
-    "GRIMM",
-    "GRIMM",
-    "GRIMM",
-    // rarity 4
-    "LOCKHEED",
-    "LOCKHEED",
-    "LOCKHEED",
-    "LOCKHEED",
-    // rarity 4
-    "U.S.ARMS",
-    "U.S.ARMS",
-    "U.S.ARMS",
-    "U.S.ARMS",
-    // rarity 5
-    "MANN",
-    "MANN",
-    "MANN",
-    "MANN",
-    "MANN",
-    // rarity 5
-    "REBRIDGE",
-    "REBRIDGE",
-    "REBRIDGE",
-    "REBRIDGE",
-    "REBRIDGE",
-    // rarity 10
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    "KARPATIKA",
-    // rarity 5
-    "BYZANTIUM",
-    "BYZANTIUM",
-    "BYZANTIUM",
-    "BYZANTIUM",
-    "BYZANTIUM",
-    // rarity 5
-    "WULFHUND",
-    "WULFHUND",
-    "WULFHUND",
-    "WULFHUND",
-    "WULFHUND",
-    // rarity 10
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    "MEGA",
-    // rarity 5
-    "BUDGETARMS",
-    "BUDGETARMS",
-    "BUDGETARMS",
-    "BUDGETARMS",
-    "BUDGETARMS",
-    // rarity 5
-    "VICEROY",
-    "VICEROY",
-    "VICEROY",
-    "VICEROY",
-    "VICEROY",
-    // rarity 5
-    "SHIZUKU",
-    "SHIZUKU",
-    "SHIZUKU",
-    "SHIZUKU",
-    "SHIZUKU",
-    // rarity 5
-    "KOWLUNG",
-    "KOWLUNG",
-    "KOWLUNG",
-    "KOWLUNG",
-    "KOWLUNG",
-    // rarity 2
-    "ZENTAI",
-    "ZENTAI",
-    // rarity 2
-    "DOSTOEV",
-    "DOSTOEV",
-    // rarity 2
-    "CHASSEUR",
-    "CHASSEUR",
-    // rarity 5
-    "DECHEVEAU",
-    "DECHEVEAU",
-    "DECHEVEAU",
-    "DECHEVEAU",
-    "DECHEVEAU",
-    // rarity 2
-    "ZIDOVKA",
-    "ZIDOVKA",
-    // rarity 3
-    "STREET",
-    "STREET",
-    "STREET",
-    // rarity 1
-    "ARMY",
-    // rarity 1
-    "POLICE",
-    // rarity 1
-    "BLACK OPS",
-    // rarity 1
-    "SCAV",
-  ],
-  types: [
-    "Skillchip",
-    "Leg",
-    "Arm",
-    "Eyes",
-    "Neuralink",
-    "Hand",
-    "Foot",
-    "Internal",
-    "Audio",
-    "Skin",
-    "Skeleton",
-    "Exotic",
-  ],
-  codenames: [
-    "LX",
-    "KLF",
-    "ARB",
-    "IRN",
-    "IRQ",
-    "ROM",
-    "LUX",
-    "SXY",
-    "SXS",
-    "SOR",
-    "PRS",
-    "GRM",
-    "PRM",
-    "MDV",
-    "RSS",
-    "USA",
-    "SUA",
-    "RSA",
-    "XLR",
-    "XQP",
-    "MSA",
-    "KKW",
-    "PPQ",
-    "PPR",
-    "PPW",
-    "MAJ",
-    "KNG",
-    "QNN",
-    "JKR",
-    "JFK",
-    "FDR",
-    "DEJ",
-    "GDJ",
-    "NCL",
-    "BUC",
-    "IAS",
-    "CLJ",
-    "SCV",
-    "VSL",
-    "CRB",
-    "CVA",
-  ],
+let brands = {
+  "MILITARY BLACKHAMMER": 0.04,
+  "MILITARY MILITECHKA": 0.04,
+  "MILITARY GRIMM": 0.04,
+  "MILITARY LOCKHEED": 0.04,
+  "MILITARY U.S.ARMS": 0.04,
+  "BUDGET MEGA": 0.1,
+  "BUDGET BUDGETARMS": 0.05,
+  "BUDGET VICEROY": 0.05,
+  "BUDGET SHIZUKU": 0.05,
+  "BUDGET KOWLUNG": 0.05,
+  "SPECIAL STREET": 0.03,
+  "SPECIAL ARMY": 0.01,
+  "SPECIAL POLICE": 0.01,
+  "SPECIAL BLACK OPS": 0.01,
+  "SPECIAL SCAV": 0.01,
+  "INDUSTRIAL MANN": 0.05,
+  "INDUSTRIAL REBRIDGE": 0.05,
+  "INDUSTRIAL KARPATIKA": 0.1,
+  "INDUSTRIAL BYZANTIUM": 0.05,
+  "INDUSTRIAL WULFHUND": 0.05,
+  "LUXURY ZENTAI": 0.02,
+  "LUXURY DOSTOEV": 0.02,
+  "LUXURY CHASSEUR": 0.02,
+  "LUXURY DECHEVEAU": 0.05,
+  "LUXURY ZIDOVKA": 0.02,
 };
 
 function generateCyberware() {
-  const randomConditionIndex = getRandomIndex(cyberwareOptions.conditions);
-  const randomBrandIndex = getRandomIndex(cyberwareOptions.brands);
-  const randomTypeIndex = getRandomIndex(cyberwareOptions.types);
-  const randomCodenameIndex = getRandomIndex(cyberwareOptions.codenames);
-  const randomPriceIndex = getRandomIndex(cyberwareOptions.prices);
+  document.getElementById("cyberwareResult").innerHTML =
+    "Generated Cyberware: <ul> ";
 
-  const condition = cyberwareOptions.conditions[randomConditionIndex];
-  const brand = cyberwareOptions.brands[randomBrandIndex];
-  const type = cyberwareOptions.types[randomTypeIndex];
-  const codename = cyberwareOptions.codenames[randomCodenameIndex];
-  const price = cyberwareOptions.prices[randomPriceIndex];
+  let begin = "<li>";
 
-  const rarityIndex = getRandomIndex(cyberwareOptions.rarities);
-  const rarity = cyberwareOptions.rarities[rarityIndex];
+  let cybernetic = getRandomItemFrom(cybernetics);
+  // step 2
+  let brand = getRandomItemFrom(brands);
+  let brandColour = "";
+  if (brand.startsWith("MILITARY")) brandColour = "green";
+  if (brand.startsWith("BUDGET")) brandColour = "beige";
+  if (brand.startsWith("SPECIAL")) brandColour = "darkgray";
+  if (brand.startsWith("INDUSTRIAL")) brandColour = "orange";
+  if (brand.startsWith("LUXURY")) brandColour = "purple";
 
-  price = priceCalculator(type, brand, condition);
-
-  const generatedCyberware = new Cyberware(
+  cyberwareResult = begin.concat(
+    "Cybernetic: ",
+    cybernetic,
+    '</li><li style="color:',
+    brandColour,
+    '">',
     brand,
-    condition,
-    type,
-    codename,
-    price,
-    rarity
+    "</li></ul>"
   );
 
-  document.getElementById("cyberwareResult").innerHTML =
-    "Generated Cyberware: " + generatedCyberware.toString();
+  document
+    .getElementById("cyberwareResult")
+    .insertAdjacentHTML("beforeend", cyberwareResult);
 
   // Enable the download link
   document.getElementById("downloadLink").style.display = "block";
   // Set the download link href to a data URI containing the generated content
   document.getElementById("downloadLink").href =
     "data:text/plain;charset=utf-8," +
-    encodeURIComponent(generatedCyberware.toString());
+    encodeURIComponent(generateCyberware.toString());
 }
-
-
 
 function getRandomItemFrom(probabilities) {
   let checkSum = 0;
   Object.keys(probabilities).forEach((key, index) => {
     checkSum += probabilities[key];
   });
-  if (checkSum !== 1) {
-    console.log("not 1");
+  if (checkSum.toFixed(2) != 1) {
+    console.log("not 1 but ", checkSum);
     return "Probability items don't sum to 1";
   }
 
   let s = 0;
 
   let weights = Object.values(probabilities);
-  let results = Object.keys(probabilities).map((key, index) => {
-    return index;
-  });
-  // console.log(weights, results);
 
   let num = Math.random();
   let lastIndex = weights.length;
@@ -317,11 +112,6 @@ function getRandomItemFrom(probabilities) {
   if (chosen == -1) {
     return "something went wrong";
   }
-  console.log(s, num, chosen);
-
   console.log(Object.keys(probabilities)[chosen]);
-}
-
-function generate(){
-  
+  return Object.keys(probabilities)[chosen];
 }
