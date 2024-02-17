@@ -57,7 +57,7 @@ let budgetConditions = {
   "Etched (+1 Style)": 0.03,
   "Chromed (+1 Style)": 0.03,
   Realskinn: 0.05,
-  "Prototype (2x effects, breaks on Crit/Fumble)": 0.03,
+  Prototype: 0.03,
   "Masterwork (2x effects)": 0.01,
 };
 let industrialConditions = {
@@ -71,7 +71,7 @@ let industrialConditions = {
   "Etched (+1 Style)": 0.01,
   "Chromed (+1 Style)": 0.01,
   Realskinn: 0.01,
-  "Prototype (2x effects, breaks on Crit/Fumble)": 0.05,
+  Prototype: 0.05,
   "Masterwork (2x effects)": 0.01,
 };
 let militaryConditions = {
@@ -85,7 +85,7 @@ let militaryConditions = {
   "Etched (+1 Style)": 0.06,
   "Chromed (+1 Style)": 0.05,
   Realskinn: 0.02,
-  "Prototype (2x effects, breaks on Crit/Fumble)": 0.1,
+  Prototype: 0.1,
   "Masterwork (2x effects)": 0.03,
 };
 let luxuryConditions = {
@@ -99,7 +99,7 @@ let luxuryConditions = {
   "Etched (+1 Style)": 0.1,
   "Chromed (+1 Style)": 0.1,
   Realskinn: 0.1,
-  "Prototype (2x effects, breaks on Crit/Fumble)": 0.05,
+  Prototype: 0.05,
   "Masterwork (2x effects)": 0.1,
 };
 let specialConditions = {
@@ -113,7 +113,7 @@ let specialConditions = {
   "Etched (+1 Style)": 0.02,
   "Chromed (+1 Style)": 0.05,
   Realskinn: 0.04,
-  "Prototype (2x effects, breaks on Crit/Fumble)": 0.35,
+  Prototype: 0.35,
   "Masterwork (2x effects)": 0.1,
 };
 
@@ -182,8 +182,7 @@ function generateCyberware() {
   if (condition == "Etched (+1 Style)") price = price * 1.5;
   if (condition == "Chromed (+1 Style)") price = price * 2;
   if (condition == "Realskinn") price = price * 2;
-  if (condition == "Prototype (2x effects, breaks on Crit/Fumble)")
-    price = price * 3;
+  if (condition == "Prototype") price = price * 3;
   if (condition == "Masterwork (2x effects)") price = price * 5;
 
   price = price.toFixed(2);
