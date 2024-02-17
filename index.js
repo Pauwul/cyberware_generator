@@ -134,6 +134,7 @@ function generateCyberware() {
   if (cybernetic == "Hand") price = 70;
   if (cybernetic == "Foot") price = 50;
   if (cybernetic == "Internal") price = 200;
+  if (cybernetic == "Audio") price = 80;
   if (cybernetic == "Skin") price = 50;
   if (cybernetic == "Skeleton") price = 300;
   if (cybernetic == "Exotic") price = 400;
